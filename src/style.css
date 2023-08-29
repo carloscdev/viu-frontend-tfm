@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-dark text-white;
+  @apply bg-dark text-white overflow-x-hidden;
 }
 
 select,
@@ -44,4 +44,18 @@ label {
 
 .validate-danger label {
   @apply text-red-500 opacity-50;
+}
+
+ /* Table */
+
+.table {
+  @apply grid gap-5 mt-5 overflow-scroll;
+
+}
+.table-head {
+  @apply grid  gap-3 border px-5 py-2 rounded border-dark-light text-dark-light min-w-[50rem];
+}
+
+.table-row {
+  @apply hover:bg-dark-gray grid items-center gap-3 border border-dark-light px-5 py-3 rounded;
 }

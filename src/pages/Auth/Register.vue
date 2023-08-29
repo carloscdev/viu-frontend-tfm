@@ -1,31 +1,41 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import AuthLayout from '../../layouts/AuthLayout.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { Icon } from '@iconify/vue';
+import { AuthService } from '../../services/auth.service';
+import { useStore } from '@/store/';
+import { useRouter } from 'vue-router';
+
+const store = useStore();
+const router = useRouter();
+
+const authService = new AuthService();
+
+const isLoading = ref(false);
 
 const user = reactive({
-  email: '',
   name: '',
+  email: '',
   password: '',
-  confirmPassword: '',
+  passwordConfirm: '',
 });
 
 const rules = {
-  email: {
-    required: helpers.withMessage('El correo electrónico es requerido', required),
-    email: helpers.withMessage('El correo electrónico no es válido', email)
-  },
   name: {
     required: helpers.withMessage('El nombre es requerido', required),
     minLengthValue: helpers.withMessage('El nombre debe tener al menos 3 caracteres', minLength(3))
+  },
+  email: {
+    required: helpers.withMessage('El correo electrónico es requerido', required),
+    email: helpers.withMessage('El correo electrónico no es válido', email)
   },
   password: {
     required: helpers.withMessage('La contraseña es requerida', required),
     minLengthValue: helpers.withMessage('La contraseña debe tener al menos 8 caracteres', minLength(8))
   },
-  confirmPassword: {
+  passwordConfirm: {
     required: helpers.withMessage('La confirmación de contraseña es requerida', required),
     sameAsPassword: helpers.withMessage('Las contraseñas no coinciden', (value) => value === user.password)
   },
@@ -33,12 +43,19 @@ const rules = {
 
 const v$ = useVuelidate(rules, user);
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   v$.value.$touch();
   if (!v$.value.$error) {
-    console.log('Register');
-  } else {
-    console.log('Error');
+    try {
+      isLoading.value = true;
+      const response = await authService.register(user);
+      store.setToken(response.data.token);
+      router.replace({ name: 'home' })
+    } catch (error) {
+      store.activeAlert('danger', error.response.data.message);
+    } finally {
+      isLoading.value = false;
+    }
   }
 }
 
@@ -46,7 +63,7 @@ const handleLogin = async () => {
 
 <template>
   <AuthLayout>
-    <form class="grid gap-5 max-w-full" @submit.prevent="handleLogin">
+    <form class="grid gap-5 max-w-full" @submit.prevent="handleRegister">
       <div :class="v$.email.$error ? 'validate-danger' : ''">
         <label for="email">
           Correo Electrónico
@@ -80,13 +97,13 @@ const handleLogin = async () => {
           </p>
         </div>
       </div>
-      <div :class="v$.confirmPassword.$error ? 'validate-danger' : ''">
+      <div :class="v$.passwordConfirm.$error ? 'validate-danger' : ''">
         <label for="password">
           Contraseña
         </label>
-        <input type="password" id="password" v-model="user.confirmPassword"/>
+        <input type="password" id="password" v-model="user.passwordConfirm"/>
         <div class="text-red-500 text-sm">
-          <p v-for="error of v$.confirmPassword.$errors">
+          <p v-for="error of v$.passwordConfirm.$errors">
             {{ error.$message }}
           </p>
         </div>

@@ -1,5 +1,16 @@
 <script setup>
+import { onMounted } from 'vue';
+import{ useStore } from '@/store';
+import { useRouter } from 'vue-router';
 
+const store = useStore();
+const router = useRouter();
+
+onMounted(() => {
+  if (store.isAuth()) {
+    router.replace({ name: 'home' })
+  }
+})
 </script>
 
 <template>

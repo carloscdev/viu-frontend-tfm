@@ -3,30 +3,28 @@ import axios from 'axios';
 const handleAxios = () => {
   axios.interceptors.request.use(
     (config) => {
-      console.log('CONFIG ===========', config)
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token');
       if (token) {
-        config.headers.Authorization = 'Bearer ' + token
+        config.headers.Authorization = 'Bearer ' + token;
       }
-      return config
+      return config;
     },
     function (error) {
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   )
 
   axios.interceptors.response.use(
     function (response) {
-      console.log('RESPONSE =========', response)
-      return response
+      return response;
     },
     function (error) {
-      console.log('ERROR ===========', error.response)
+      console.log('========== ERROR ===========', error.response)
       if (error.response.status === 401 || error.response.status === 403) {
         localStorage.removeItem('token')
         window.location.href = '/'
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   )
 };

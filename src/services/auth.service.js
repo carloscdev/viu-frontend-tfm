@@ -5,7 +5,7 @@ export class AuthService {
     return await axios.post(`/users/login`, user);
   }
 
-  async register(email, password) {
-    return await axios.post(`/users/register`, { email, password });
+  async register(user) {
+    return await axios.post(`/users/register`, user);
   }
 }

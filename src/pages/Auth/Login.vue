@@ -2,10 +2,15 @@
 import { ref, reactive } from 'vue';
 import AuthLayout from '../../layouts/AuthLayout.vue';
 import ButtonBase from '../../components/Base/ButtonBase.vue';
-import { useVuelidate } from '@vuelidate/core'
+import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { Icon } from '@iconify/vue';
 import { AuthService } from '../../services/auth.service';
+import { useStore } from '@/store/';
+import { useRouter } from 'vue-router';
+
+const store = useStore();
+const router = useRouter();
 
 const authService = new AuthService();
 
@@ -35,15 +40,13 @@ const handleLogin = async () => {
     try {
       isLoading.value = true;
       const response = await authService.login(user);
-      localStorage.setItem('token', response.data.token)
-      console.log(response.data);
+      store.setToken(response.data.token);
+      router.replace({ name: 'home' })
     } catch (error) {
-      console.log("HANDLE ERRORRRRRRRR",error);
+      store.activeAlert('danger', error.response.data.message);
     } finally {
       isLoading.value = false;
     }
-  } else {
-    console.log('Error');
   }
 }
 

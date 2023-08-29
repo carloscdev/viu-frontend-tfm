@@ -4,11 +4,14 @@ import App from './App.vue'
 import router from './router'
 import handleAxios from './utils/handleAxios'
 import axios from 'axios'
+import { createPinia } from 'pinia'
 
+const pinia = createPinia()
 const app = createApp(App)
 
 axios.defaults.baseURL = 'http://localhost:3000/api'
 handleAxios()
 
+app.use(pinia)
 app.use(router)
 app.mount('#app')
