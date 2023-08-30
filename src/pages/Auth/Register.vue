@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import AuthLayout from '../../layouts/AuthLayout.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { Icon } from '@iconify/vue';
@@ -62,61 +61,59 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <AuthLayout>
-    <form class="grid gap-5 max-w-full" @submit.prevent="handleRegister">
-      <div :class="v$.email.$error ? 'validate-danger' : ''">
-        <label for="email">
-          Correo Electrónico
-        </label>
-        <input type="email" id="email" v-model="user.email"/>
-        <div class="text-red-500 text-sm">
-          <p v-for="error of v$.email.$errors">
-            {{ error.$message }}
-          </p>
-        </div>
+  <form class="grid gap-5 max-w-full" @submit.prevent="handleRegister">
+    <div :class="v$.email.$error ? 'validate-danger' : ''">
+      <label for="email">
+        Correo Electrónico
+      </label>
+      <input type="email" id="email" v-model="user.email"/>
+      <div class="text-red-600 text-sm">
+        <p v-for="error of v$.email.$errors">
+          {{ error.$message }}
+        </p>
       </div>
-      <div :class="v$.name.$error ? 'validate-danger' : ''">
-        <label for="text">
-          Nombre
-        </label>
-        <input type="text" id="text" v-model="user.name"/>
-        <div class="text-red-500 text-sm">
-          <p v-for="error of v$.name.$errors">
-            {{ error.$message }}
-          </p>
-        </div>
+    </div>
+    <div :class="v$.name.$error ? 'validate-danger' : ''">
+      <label for="text">
+        Nombre
+      </label>
+      <input type="text" id="text" v-model="user.name"/>
+      <div class="text-red-600 text-sm">
+        <p v-for="error of v$.name.$errors">
+          {{ error.$message }}
+        </p>
       </div>
-      <div :class="v$.password.$error ? 'validate-danger' : ''">
-        <label for="password">
-          Contraseña
-        </label>
-        <input type="password" id="password" v-model="user.password"/>
-        <div class="text-red-500 text-sm">
-          <p v-for="error of v$.password.$errors">
-            {{ error.$message }}
-          </p>
-        </div>
+    </div>
+    <div :class="v$.password.$error ? 'validate-danger' : ''">
+      <label for="password">
+        Contraseña
+      </label>
+      <input type="password" id="password" v-model="user.password"/>
+      <div class="text-red-600 text-sm">
+        <p v-for="error of v$.password.$errors">
+          {{ error.$message }}
+        </p>
       </div>
-      <div :class="v$.passwordConfirm.$error ? 'validate-danger' : ''">
-        <label for="password">
-          Contraseña
-        </label>
-        <input type="password" id="password" v-model="user.passwordConfirm"/>
-        <div class="text-red-500 text-sm">
-          <p v-for="error of v$.passwordConfirm.$errors">
-            {{ error.$message }}
-          </p>
-        </div>
+    </div>
+    <div :class="v$.passwordConfirm.$error ? 'validate-danger' : ''">
+      <label for="password">
+        Contraseña
+      </label>
+      <input type="password" id="password" v-model="user.passwordConfirm"/>
+      <div class="text-red-600 text-sm">
+        <p v-for="error of v$.passwordConfirm.$errors">
+          {{ error.$message }}
+        </p>
       </div>
-      <div class="grid gap-1">
-        <button type="submit" class="button-primary">
-          Registrarse
-          <Icon icon="mdi:account-plus" class="text-lg"/>
-        </button>
-        <router-link class="button button-light" to="/usuario/inicio-sesion">
-          ¿Ya tienes una cuenta?
-        </router-link>
-      </div>
-    </form>
-  </AuthLayout>
+    </div>
+    <div class="grid gap-1">
+      <button type="submit" class="button-primary">
+        Registrarse
+        <Icon icon="mdi:account-plus" class="text-lg"/>
+      </button>
+      <router-link class="button button-light" to="/usuario/inicio-sesion">
+        ¿Ya tienes una cuenta?
+      </router-link>
+    </div>
+  </form>
 </template>

@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
+import { useStore } from '@/store';
 
+const store = useStore();
 const items = ref([
   {
     icon: 'mdi:view-dashboard-outline',
@@ -37,7 +39,7 @@ const items = ref([
         <Icon :icon="item.icon" class="text-3xl mx-auto"/>
         <span class="text-dark-light group-hover:text-primary">{{ item.text }}</span>
       </router-link>
-      <a class="text-red-500 hover:opacity-80 cursor-pointer">
+      <a class="text-red-600 hover:opacity-80 cursor-pointer" @click="store.logout">
         <Icon icon="mdi:logout" class="text-3xl mx-auto"/>
         <span>Salir</span>
       </a>
@@ -49,6 +51,9 @@ const items = ref([
 .router-link-active,
 .router-link-active span {
   @apply text-primary;
+}
+.router-link-active.button-light {
+  @apply text-dark-light
 }
 .menu {
   transform: translateX(-100px);

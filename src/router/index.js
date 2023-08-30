@@ -1,19 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../pages/Dashboard/Home.vue';
-import dashboardRoute from './auth.route';
+import authRoute from './auth.route';
+import dashboardRoute from './dashboard.route';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     // Public
-    {
-      meta: { title: 'Inicio' },
-      path: '/',
-      name: 'home',
-      component: Home,
-    },
-
     ...dashboardRoute,
+    ...authRoute,
 
     // Default
     {

@@ -4,9 +4,6 @@ import { useRouter } from 'vue-router';
 import { useStore } from '@/store/';
 import SideMenu from '@/components/Dashboard/SideMenu.vue';
 import { UserService } from '@/services/user.service';
-import TitleBase from '@/components/Base/TitleBase.vue';
-
-defineProps(['title']);
 
 const store = useStore();
 const router = useRouter();
@@ -38,8 +35,7 @@ onMounted(async () => {
 <template>
   <SideMenu />
   <div class="md:ml-[100px]">
-    <main class="my-10 mx-5 flex flex-col gap-10">
-      <TitleBase :title="title" />
+    <main class="my-10 mx-5 flex flex-col gap-12">
       <slot />
     </main>
   </div>

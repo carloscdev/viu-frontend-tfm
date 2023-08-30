@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #E65014;
+}
+
 body {
   @apply bg-dark text-white overflow-x-hidden;
 }
@@ -10,16 +14,22 @@ select,
 input[type="password"],
 input[type="email"],
 input[type="search"],
-input[type="text"] {
+input[type="text"],
+textarea {
   @apply bg-dark-gray border border-dark-light px-4 h-10 text-white rounded focus:outline-none focus:border-primary w-full focus:shadow-primary focus:shadow;
+}
+
+textarea {
+  @apply h-20 py-2;
 }
 
 .validate-danger select,
 .validate-danger input[type="password"],
 .validate-danger input[type="email"],
 .validate-danger input[type="search"],
-.validate-danger input[type="text"] {
-  @apply bg-red-900/10 border-red-500 focus:border-red-500 w-full focus:shadow-red-500 focus:shadow;
+.validate-danger input[type="text"],
+.validate-danger textarea {
+  @apply bg-red-900/10 border-red-600 focus:border-red-600 w-full focus:shadow-red-600 focus:shadow;
 }
 
 input[type="button"],
@@ -27,11 +37,14 @@ input[type="submit"],
 button[type="submit"],
 button,
 .button {
-  @apply text-white h-10 rounded flex items-center justify-center w-full hover:opacity-95 gap-2 disabled:opacity-70 disabled:cursor-not-allowed;
+  @apply text-white h-10 rounded flex items-center justify-center w-full hover:opacity-95 gap-2 disabled:opacity-70 disabled:cursor-not-allowed ease-in-out duration-100;
 }
 
 .button-primary {
-  @apply bg-primary hover:shadow hover:shadow-primary ease-in-out duration-100 font-semibold;
+  @apply bg-primary hover:shadow hover:shadow-primary font-semibold;
+}
+.button-danger {
+  @apply bg-red-600 hover:shadow hover:shadow-red-600 font-semibold;
 }
 
 .button-light {
@@ -43,7 +56,7 @@ label {
 }
 
 .validate-danger label {
-  @apply text-red-500 opacity-50;
+  @apply text-red-600 opacity-50;
 }
 
  /* Table */
@@ -58,4 +71,8 @@ label {
 
 .table-row {
   @apply hover:bg-dark-gray grid items-center gap-3 border border-dark-light px-5 py-3 rounded;
+}
+
+pre {
+  @apply bg-dark-gray p-5 rounded overflow-x-auto;
 }

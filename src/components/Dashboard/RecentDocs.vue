@@ -35,7 +35,7 @@ onMounted(async () => {
         <li>Descripción</li>
         <li>Usuario</li>
         <li>Categoría</li>
-        <li>Publicado</li>
+        <li>Fecha</li>
       </ul>
       <ul v-for="doc of documents" :key="doc.documentId" class="table-row grid-cols-[0.4fr,0.4fr,0.3fr,0.2fr,0.2fr]">
         <li class="font-bold">

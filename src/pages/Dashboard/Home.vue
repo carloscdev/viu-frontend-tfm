@@ -1,11 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import DashboardLayout from '@/layouts/DashboardLayout.vue';
 import RecentDocs from '@/components/Dashboard/RecentDocs.vue';
 import { useStore } from '@/store/';
 import { DocumentService } from '@/services/document.service';
 import { FavoriteService } from '@/services/favorite.service';
 import { CommentService } from '@/services/comment.service';
+import { formatSimpleDate } from '@/utils/handleDate';
+import TitleBase from '@/components/Base/TitleBase.vue';
 
 const store = useStore();
 const documentService = new DocumentService();
@@ -35,21 +36,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <DashboardLayout :title="`Bienvenido ${store.user.name}`" >
-    <section class="grid sm:grid-cols-3 gap-5">
-      <div class="bg-green-500/30 rounded p-5 shadow">
-        <h3 class="text-xl font-light">Documentos</h3>
-        <p class="text-3xl font-bold">{{ totalDocument }}</p>
-      </div>
-      <div class="bg-blue-500/30 rounded p-5 shadow">
-        <h3 class="text-xl font-light">Favoritos</h3>
-        <p class="text-3xl font-bold">{{ totalFavorites }}</p>
-      </div>
-      <div class="bg-primary/30 rounded p-5 shadow">
-        <h3 class="text-xl font-light">Comentarios</h3>
-        <p class="text-3xl font-bold">{{ totalComments }}</p>
-      </div>
-    </section>
-    <RecentDocs />
-  </DashboardLayout>
+  <TitleBase :title="`Bienvenido ${store.user.name}`" :subtitle="`Fecha Actual: ${formatSimpleDate(new Date)}`" />
+  <section class="grid sm:grid-cols-3 gap-5">
+    <div class="bg-green-500/30 rounded p-5 shadow">
+      <h3 class="text-xl font-light">Documentos</h3>
+      <p class="text-3xl font-bold">{{ totalDocument }}</p>
+    </div>
+    <div class="bg-blue-500/30 rounded p-5 shadow">
+      <h3 class="text-xl font-light">Favoritos</h3>
+      <p class="text-3xl font-bold">{{ totalFavorites }}</p>
+    </div>
+    <div class="bg-primary/30 rounded p-5 shadow">
+      <h3 class="text-xl font-light">Comentarios</h3>
+      <p class="text-3xl font-bold">{{ totalComments }}</p>
+    </div>
+  </section>
+  <RecentDocs />
 </template>

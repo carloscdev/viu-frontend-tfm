@@ -16,6 +16,11 @@ export const useStore = defineStore('store', () => {
     message: '',
   });
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/usuario/inicio-sesion';
+  }
+
   const activeAlert = (type, message) => {
     alert.value.isActive = true;
     alert.value.type = type;
@@ -46,6 +51,7 @@ export const useStore = defineStore('store', () => {
   return {
     user,
     alert,
+    logout,
     setToken,
     setUser,
     getUser,
