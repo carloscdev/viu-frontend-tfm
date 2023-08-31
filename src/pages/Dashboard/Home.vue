@@ -37,17 +37,17 @@ onMounted(async () => {
 
 <template>
   <TitleBase :title="`Bienvenido ${store.user.name}`" :subtitle="`Fecha Actual: ${formatSimpleDate(new Date)}`" />
-  <section class="grid sm:grid-cols-3 gap-5">
+  <section class="grid md:grid-cols-3 gap-5">
     <div class="bg-green-500/30 rounded p-5 shadow">
-      <h3 class="text-xl font-light">Documentos</h3>
+      <h3 class="text-xl font-light">Documentos Publicados</h3>
       <p class="text-3xl font-bold">{{ totalDocument }}</p>
     </div>
     <div class="bg-blue-500/30 rounded p-5 shadow">
-      <h3 class="text-xl font-light">Favoritos</h3>
+      <h3 class="text-xl font-light">Favoritos Añadidos</h3>
       <p class="text-3xl font-bold">{{ totalFavorites }}</p>
     </div>
-    <div class="bg-primary/30 rounded p-5 shadow">
-      <h3 class="text-xl font-light">Comentarios</h3>
+    <div class="bg-indigo-500/30 rounded p-5 shadow">
+      <h3 class="text-xl font-light">Comentarios en tus documentos</h3>
       <p class="text-3xl font-bold">{{ totalComments }}</p>
     </div>
   </section>

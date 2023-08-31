@@ -87,9 +87,9 @@ onMounted(async() => {
           </option>
         </select>
         <div class="text-red-600 text-sm">
-          <small v-for="error of v$.categoryId.$errors">
+          <p v-for="error of v$.categoryId.$errors">
             {{ error.$message }}
-          </small>
+          </p>
         </div>
       </div>
       <div :class="v$.title.$error ? 'validate-danger' : ''">
@@ -98,9 +98,9 @@ onMounted(async() => {
         </label>
         <input type="text" id="text" v-model="document.title" />
         <div class="text-red-600 text-sm">
-          <small v-for="error of v$.title.$errors">
+          <p v-for="error of v$.title.$errors">
             {{ error.$message }}
-          </small>
+          </p>
         </div>
       </div>
       <div :class="v$.description.$error ? 'validate-danger' : ''">
@@ -109,9 +109,9 @@ onMounted(async() => {
         </label>
         <textarea id="description" v-model="document.description"></textarea>
         <div class="text-red-600 text-sm">
-          <small v-for="error of v$.description.$errors">
+          <p v-for="error of v$.description.$errors">
             {{ error.$message }}
-          </small>
+          </p>
         </div>
       </div>
       <div class="grid gap-1">
@@ -126,7 +126,3 @@ onMounted(async() => {
     </form>
   </ModalBase>
 </template>
-
-<style scoped>
-
-</style>

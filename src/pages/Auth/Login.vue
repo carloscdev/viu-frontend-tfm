@@ -59,9 +59,9 @@ const handleLogin = async () => {
       </label>
       <input type="email" id="email" v-model="user.email"/>
       <div class="text-red-600 text-sm">
-        <small v-for="error of v$.email.$errors">
+        <p v-for="error of v$.email.$errors">
           {{ error.$message }}
-        </small>
+        </p>
       </div>
     </div>
     <div :class="v$.password.$error ? 'validate-danger' : ''">
@@ -70,9 +70,9 @@ const handleLogin = async () => {
       </label>
       <input type="password" id="password" v-model="user.password"/>
       <div class="text-red-600 text-sm">
-        <small v-for="error of v$.password.$errors">
+        <p v-for="error of v$.password.$errors">
           {{ error.$message }}
-        </small>
+        </p>
       </div>
     </div>
     <div class="grid gap-1">

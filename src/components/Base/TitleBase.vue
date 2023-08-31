@@ -4,7 +4,7 @@ defineProps(['title', 'subtitle'])
 
 <template>
 <div>
-  <h1 class="font-bold text-3xl">
+  <h1>
     {{ title }}
   </h1>
   <small class="text-dark-light text-sm">{{ subtitle }}</small>

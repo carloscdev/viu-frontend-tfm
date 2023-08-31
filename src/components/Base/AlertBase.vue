@@ -10,7 +10,7 @@ const type = computed(() => {
 
 <template>
   <div
-    class="alert z-50 absolute bottom-5 left-0 right-0 w-96 max-w-full mx-auto p-5 rounded shadow ease-in-out duration-100"
+    class="alert z-50 fixed bottom-5 left-0 right-0 w-96 max-w-full mx-auto p-5 rounded shadow ease-in-out duration-100"
     :class="type"
   >
     {{ store.alert.message }}

@@ -7,6 +7,7 @@ import TitleBase from '@/components/Base/TitleBase.vue';
 import ButtonBase from '@/components/Base/ButtonBase.vue';
 import { Icon } from '@iconify/vue';
 import ModalAdd from './Components/ModalAdd.vue';
+import Empty from '../../../components/Dashboard/Empty.vue';
 
 const store = useStore();
 
@@ -41,7 +42,7 @@ onMounted(async () => {
         <Icon icon="mdi:plus" class="text-lg" />
       </ButtonBase>
     </div>
-    <div class="table">
+    <div class="table" v-if="documents.length">
       <ul class="table-head grid-cols-[repeat(2,0.4fr),repeat(2,0.2fr),0.1fr]">
         <li>Título</li>
         <li>Descripción</li>
@@ -68,6 +69,7 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
+    <Empty v-else />
   </section>
   <ModalAdd v-if="isModalOpen" @close="handleModal" />
 </template>

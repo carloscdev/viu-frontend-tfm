@@ -4,6 +4,7 @@ import { DocumentService } from '@/services/document.service';
 import { useStore } from '@/store/'
 import { formatSimpleDate } from '@/utils/handleDate'
 import { Icon } from '@iconify/vue';
+import Empty from '@/components/Dashboard/Empty.vue';
 
 const store = useStore();
 
@@ -28,8 +29,8 @@ onMounted(async () => {
 
 <template>
   <section>
-    <h2 class="text-2xl font-semibold">Nuevas publicaciones</h2>
-    <div class="table">
+    <h2>Nuevas publicaciones</h2>
+    <div class="table" v-if="documents.length">
       <ul class="table-head grid-cols-[0.4fr,0.4fr,0.3fr,0.2fr,0.2fr]">
         <li>Título</li>
         <li>Descripción</li>
@@ -50,5 +51,6 @@ onMounted(async () => {
         <li>{{ formatSimpleDate(doc.createdAt) }}</li>
       </ul>
     </div>
+    <Empty v-else />
   </section>
 </template>
