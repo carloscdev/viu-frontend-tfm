@@ -6,7 +6,7 @@ import { required, minLength, helpers } from '@vuelidate/validators'
 import { Icon } from '@iconify/vue';
 import { useStore } from '@/store/';
 import { useRouter, useRoute } from 'vue-router';
-
+import ConfirmDelete from '@/components/Dashboard/ConfirmDelete.vue';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { DocumentService } from '@/services/document.service';
 import { CategoryService } from '@/services/category.service';
@@ -29,11 +29,8 @@ const document = reactive({
   isPublished: true,
 })
 
-// const item = reactive({
-//   documentId: route.params.documentId,
-//   content: '',
-//   position: 1,
-// })
+const openModal = ref(false);
+
 const rules = {
   categoryId: {
     required: helpers.withMessage('La categoría es requerida', required),
@@ -92,8 +89,21 @@ const handleDocument = async () => {
   }
 }
 
-const handleDelete = () => {
-  console.log('Eliminar')
+const deleteDocument = async () => {
+  try {
+    isLoading.value = true;
+    await documentService.deleteDocument(route.params.documentId);
+    store.activeAlert('success', 'Documento eliminado correctamente.');
+    router.replace({ name: 'list-documents' });
+  } catch (error) {
+    store.activeAlert('danger', error?.response?.data?.message);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+const handleModal = () => {
+  openModal.value = !openModal.value;
 }
 
 onMounted(async () => {
@@ -158,7 +168,7 @@ onMounted(async () => {
         Guardar
         <Icon icon="mdi:content-save-outline" class="text-lg" />
       </ButtonBase>
-      <ButtonBase type="button" :isLoading="isLoading" class="button-danger" @click="handleDelete">
+      <ButtonBase type="button" :isLoading="isLoading" class="button-danger" @click="handleModal">
         Eliminar
         <Icon icon="mdi:delete-outline" class="text-lg" />
       </ButtonBase>
@@ -167,6 +177,7 @@ onMounted(async () => {
       </router-link>
     </div>
   </form>
+  <ConfirmDelete v-if="openModal" title="¿Estás seguro de eliminar este documento?" subtitle="No podrás recuperar la información" @close="handleModal" @confirm="deleteDocument" />
 </template>
 
 <style scoped>

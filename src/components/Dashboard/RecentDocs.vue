@@ -40,12 +40,12 @@ onMounted(async () => {
       </ul>
       <ul v-for="doc of documents" :key="doc.documentId" class="table-row grid-cols-[0.4fr,0.4fr,0.3fr,0.2fr,0.2fr]">
         <li class="font-bold">
-          <a target="_blank" :href="`/public/document/${doc.slug}`" class="text-primary hover:underline">
+          <a target="_blank" :href="`/publico/${doc.slug}`" class="text-primary hover:underline">
             {{ doc.title }}
             <Icon icon="mdi:open-in-new" class="inline-block w-4 h-4" />
           </a>
         </li>
-        <li>{{ doc.description }}</li>
+        <li>{{ doc.description.substring(0, 50) }}...</li>
         <li>{{ doc.user.name }}</li>
         <li>{{ doc.category.title }}</li>
         <li>{{ formatSimpleDate(doc.createdAt) }}</li>

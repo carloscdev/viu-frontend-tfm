@@ -40,12 +40,12 @@ onMounted(async () => {
       </ul>
       <ul v-for="favorite of favorites" :key="favorite.favoriteId" class="table-row grid-cols-[0.4fr,0.4fr,0.2fr,0.2fr,0.2fr,0.1fr]">
         <li class="font-bold">
-          <a target="_blank" :href="`/public/document/${favorite.slug}`" class="text-primary hover:underline">
+          <a target="_blank" :href="`/publico/${favorite.document.slug}`" class="text-primary hover:underline">
             {{ favorite.document.title }}
             <Icon icon="mdi:open-in-new" class="inline-block w-4 h-4" />
           </a>
         </li>
-        <li>{{ favorite.document.description }}</li>
+        <li>{{ favorite.document.description.substring(0, 50) }}...</li>
         <li>{{ favorite.user.name }}</li>
         <li>{{ favorite.document.category.title }}</li>
         <li>{{ formatSimpleDate(favorite.document.createdAt) }}</li>

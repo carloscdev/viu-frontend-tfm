@@ -65,6 +65,10 @@ button,
 .button-danger {
   @apply bg-red-600 hover:shadow hover:shadow-red-600 font-semibold;
 }
+.button-dark {
+  @apply bg-dark-light hover:shadow hover:shadow-dark-light font-semibold;
+}
+
 .button-outline-primary {
   @apply border border-primary text-primary hover:bg-primary hover:shadow hover:shadow-primary;
 }
@@ -99,5 +103,7 @@ label {
 }
 
 pre {
-  @apply bg-dark-gray p-5 rounded overflow-x-auto;
+  font-family: monospace !important;
+  color: inherit;
+  @apply bg-dark-gray p-5 rounded overflow-x-scroll max-w-full;
 }

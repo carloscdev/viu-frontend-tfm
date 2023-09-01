@@ -57,13 +57,13 @@ onMounted(async () => {
             <Icon icon="mdi:file-document-edit-outline" class="text-lg" />
           </router-link>
         </li>
-        <li>{{ doc.description }}</li>
+        <li>{{ doc.description.substring(0, 50) }}...</li>
         <li>{{ doc.category.title }}</li>
         <li>{{ formatSimpleDate(doc.createdAt) }}</li>
         <li class="text-2xl flex gap-1 items-center">
           <Icon v-if="doc.isPublished" icon="mdi:check" class="text-green-500" />
           <Icon v-else icon="mdi:close" class="text-red-600" />
-          <a v-if="doc.isPublished" target="_blank" :href="`/wiki/${doc.slug}`" class="hover:text-primary">
+          <a v-if="doc.isPublished" target="_blank" :href="`/publico/${doc.slug}`" class="hover:text-primary">
             <Icon icon="mdi:eye-outline" />
           </a>
         </li>

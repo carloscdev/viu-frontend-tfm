@@ -24,4 +24,12 @@ export class DocumentService {
   async updateDocument(documentId, document) {
     return await axios.patch(`/documents/${documentId}`, document);
   }
+
+  async deleteDocument(documentId) {
+    return await axios.delete(`/documents/${documentId}`);
+  }
+
+  async getDocumentBySlug(slug) {
+    return await axios.get(`/documents/public/${slug}`);
+  }
 }
