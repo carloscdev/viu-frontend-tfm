@@ -1,35 +1,39 @@
 import axios from "axios";
 
 export class DocumentService {
-  async getTotalDocuments() {
-    return await axios.get(`/documents/total`);
+  getTotalDocuments() {
+    return axios.get(`/documents/total`);
   }
 
-  async getRecentDocuments() {
-    return await axios.get(`/documents/recent`);
+  getRecentDocuments() {
+    return axios.get(`/documents/recent`);
   }
 
-  async getDocuments() {
-    return await axios.get(`/documents`);
+  getDocuments() {
+    return axios.get(`/documents`);
   }
 
-  async getDocumentById(documentId) {
-    return await axios.get(`/documents/${documentId}`);
+  getDocumentById(documentId) {
+    return axios.get(`/documents/${documentId}`);
   }
 
-  async createDocument(document) {
-    return await axios.post(`/documents`, document);
+  createDocument(document) {
+    return axios.post(`/documents`, document);
   }
 
-  async updateDocument(documentId, document) {
-    return await axios.patch(`/documents/${documentId}`, document);
+  updateDocument(documentId, document) {
+    return axios.patch(`/documents/${documentId}`, document);
   }
 
-  async deleteDocument(documentId) {
-    return await axios.delete(`/documents/${documentId}`);
+  deleteDocument(documentId) {
+    return axios.delete(`/documents/${documentId}`);
   }
 
-  async getDocumentBySlug(slug) {
-    return await axios.get(`/documents/public/${slug}`);
+  getDocumentBySlug(slug) {
+    return axios.get(`/documents/public/${slug}`);
+  }
+
+  getPublicDocuments() {
+    return axios.get(`/documents/public`);
   }
 }

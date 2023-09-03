@@ -1,10 +1,22 @@
 import axios from "axios";
 
 export class FavoriteService {
-  async getTotalFavorites() {
-    return await axios.get(`/favorites/total`);
+  getTotalFavorites() {
+    return axios.get(`/favorites/total`);
   }
-  async getFavorites() {
-    return await axios.get(`/favorites`);
+  getFavorites() {
+    return axios.get(`/favorites`);
+  }
+
+  validateFavorite(documentId) {
+    return axios.get(`/favorites/validate/${documentId}`);
+  }
+
+  addFavorite(documentId) {
+    return axios.post(`/favorites`, { documentId });
+  }
+
+  removeFavorite(documentId) {
+    return axios.delete(`/favorites/${documentId}`);
   }
 }

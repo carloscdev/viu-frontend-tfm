@@ -6,24 +6,39 @@ import { useStore } from '@/store';
 const store = useStore();
 const items = ref([
   {
-    icon: 'mdi:view-dashboard-outline',
+    icon: 'mdi:home-outline',
     text: 'Inicio',
-    to: '/'
+    to: {
+      name: 'public-main'
+    }
+  },
+  {
+    icon: 'mdi:view-dashboard-outline',
+    text: 'Dashboard',
+    to: {
+      name: 'home'
+    }
   },
   {
     icon: 'mdi:book-open-page-variant-outline',
-    text: 'Wikis',
-    to: '/documentos'
-  },
-  {
-    icon: 'mdi:account-outline',
-    text: 'Perfil',
-    to: '/perfil'
+    text: 'Documentos',
+    to: {
+      name: 'list-documents'
+    }
   },
   {
     icon: 'mdi:cards-heart-outline',
     text: 'Favoritos',
-    to: '/favoritos'
+    to: {
+      name: 'favorites'
+    }
+  },
+  {
+    icon: 'mdi:account-outline',
+    text: 'Perfil',
+    to: {
+      name: 'profile'
+    }
   },
 ]);
 
@@ -31,7 +46,7 @@ const items = ref([
 
 <template>
   <aside class="menu bg-dark-gray py-10 fixed left-0 top-0 w-[100px] min-h-screen">
-    <router-link to="/">
+    <router-link :to="{ name: 'home' }">
       <img src="../../assets/logo-small.png" alt="Logo VIU HUB" width="55" class="mx-auto">
     </router-link>
     <nav class="flex items-center justify-center flex-col mt-16 gap-5">

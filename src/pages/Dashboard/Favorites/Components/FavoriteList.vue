@@ -17,7 +17,17 @@ const getRecentDocuments = async () => {
     const response = await favoriteService.getFavorites();
     favorites.value = response.data;
   } catch (error) {
-    store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las ultimas publicaciones.');
+    store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener tus publicaciones favoritas.');
+  }
+}
+
+const removeFavorite  = async (favoriteId) => {
+  try {
+    await favoriteService.removeFavorite(favoriteId);
+    await getRecentDocuments();
+    store.activeAlert('success', 'Se ha eliminado el favorito correctamente.');
+  } catch (error) {
+    store.activeAlert('danger', error?.response?.data?.message || 'No se pudo eliminar el favorito.');
   }
 }
 
@@ -50,7 +60,7 @@ onMounted(async () => {
         <li>{{ favorite.document.category.title }}</li>
         <li>{{ formatSimpleDate(favorite.document.createdAt) }}</li>
         <li>
-          <Icon icon="mdi:delete-outline" class="text-red-600 text-2xl cursor-pointer" />
+          <Icon icon="mdi:heart-remove" class="text-red-600 text-2xl cursor-pointer" @click="removeFavorite(favorite.document.documentId)" />
         </li>
       </ul>
     </div>

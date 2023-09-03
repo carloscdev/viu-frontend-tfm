@@ -28,7 +28,9 @@ h2 {
 h3 {
   @apply font-semibold text-xl;
 }
-
+h4 {
+  @apply font-semibold text-lg;
+}
 select,
 input[type="password"],
 input[type="email"],
@@ -39,7 +41,7 @@ textarea {
 }
 
 textarea {
-  @apply h-20 py-2;
+  @apply h-24 py-2;
 }
 
 .validate-danger select,
@@ -102,8 +104,8 @@ label {
   @apply hover:bg-dark-gray grid items-center gap-3 border border-dark-light px-5 py-3 rounded;
 }
 
-pre {
+.item-content pre {
   font-family: monospace !important;
   color: inherit;
-  @apply bg-dark-gray p-5 rounded overflow-x-scroll max-w-full;
+  @apply bg-dark-gray p-5 rounded overflow-x-scroll max-w-[350px] sm:max-w-[720px];
 }

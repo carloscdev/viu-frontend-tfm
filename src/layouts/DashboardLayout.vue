@@ -16,7 +16,7 @@ const getProfile = async () => {
     const response = await userService.getProfile();
     await store.setUser(response.data);
   } catch (error) {
-    store.activeAlert('danger', error?.response?.data?.message);
+    store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al obtener los datos de usuario');
   }
 }
 

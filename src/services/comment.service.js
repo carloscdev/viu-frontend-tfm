@@ -1,11 +1,19 @@
 import axios from "axios";
 
 export class CommentService {
-  async getTotalComments() {
-    return await axios.get(`/comments/total`);
+  getTotalComments() {
+    return axios.get(`/comments/total`);
   }
 
-  async getCommentsByDocument(documentId) {
-    return await axios.get(`/comments/document/${documentId}`);
+  getCommentsByDocument(documentId) {
+    return axios.get(`/comments/document/${documentId}`);
+  }
+
+  createComment(comment) {
+    return axios.post(`/comments`, comment);
+  }
+
+  deleteComment(commentId) {
+    return axios.delete(`/comments/${commentId}`);
   }
 }

@@ -17,7 +17,7 @@ const getRecentDocuments = async () => {
     const response = await documentService.getRecentDocuments();
     documents.value = response.data;
   } catch (error) {
-    store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las ultimas publicaciones.');
+    store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las últimas publicaciones.');
   }
 }
 

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { DocumentService } from '@/services/document.service';
-import { CommentService } from '@/services/comment.service';
+import { FavoriteService } from '@/services/favorite.service';
 import { useRoute } from 'vue-router';
 import { useStore } from '@/store/';
 import { formatSimpleDate } from '@/utils/handleDate';
@@ -9,20 +9,38 @@ import { Icon } from '@iconify/vue';
 import Empty from '@/components/Dashboard/Empty.vue';
 import Footer from '@/components/Dashboard/Footer.vue';
 import LoadingDocument from './Components/LoadingDocument.vue';
+import Comments from './Components/Comments.vue';
+import Items from './Components/Items.vue';
 
 const store = useStore();
 const route = useRoute();
 const slug = route.params.slug;
 
 const documentService = new DocumentService();
-const commentService = new CommentService();
+const favoriteService = new FavoriteService();
 const document = ref({});
 const items = ref([]);
 const user = ref({});
 const category = ref({});
-const comments = ref([]);
 const existDocument = ref(true);
 const isLoading = ref(true);
+const isFavorite = ref(false);
+
+const handleFavorite = async () => {
+  try {
+    if (isFavorite.value) {
+      isFavorite.value = false;
+      await favoriteService.removeFavorite(document.value.documentId);
+      store.activeAlert('success', 'Se ha eliminado de favoritos');
+    } else {
+      isFavorite.value = true;
+      await favoriteService.addFavorite(document.value.documentId);
+      store.activeAlert('success', 'Se ha agregado a favoritos');
+    }
+  } catch (error) {
+    store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al agregar a favoritos');
+  }
+}
 
 onMounted(async () => {
   try {
@@ -31,25 +49,37 @@ onMounted(async () => {
     user.value = await response.data.document.user;
     items.value = await response.data.items;
     category.value = await response.data.document.category;
-    const commentResponse = await commentService.getCommentsByDocument(document.value.documentId);
-    comments.value = await commentResponse.data;
     window.document.title = document.value.title + ' — VIU HUB';
+    if (store.isAuth()) {
+      try {
+        const responseFavorite = await favoriteService.validateFavorite(document.value.documentId);
+        isFavorite.value = responseFavorite.data.favorite;
+      } catch (error) {
+        //
+      }
+    }
   } catch (error) {
-    store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error');
+    store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al obtener el documento');
     existDocument.value = false;
   } finally {
     setTimeout(() => {
       isLoading.value = false;
-    }, 1000);
+    }, 500);
   }
 });
 
 </script>
 
 <template>
-  <div class="w-[720px] mx-auto my-16 max-w-[90%] grid gap-5" v-if="existDocument && !isLoading">
-    <main v-if="document" class="border-t border-dark-gray py-10">
-      <small class="text-dark-light text-sm">Categoría: {{ category.title }}</small>
+  <div v-if="existDocument && !isLoading">
+    <main v-if="document" class="border-t border-dark-gray py-10 fadeUp">
+      <div class="flex items-center justify-between">
+        <small class="border border-dark-gray bg-dark-gray font-bold text-dark-light p-2 rounded-full inline-block mb-5">{{ category.title }}</small>
+        <div v-if="store.isAuth()">
+          <Icon v-if="isFavorite" icon="mdi:heart" class="text-[2.5rem] text-red-500 cursor-pointer" @click="handleFavorite" />
+          <Icon v-else icon="mdi:heart-outline" class="text-[2.5rem] cursor-pointer" @click="handleFavorite" />
+        </div>
+      </div>
       <h1>{{ document.title }}</h1>
       <p class="mt-5 text-xl text-dark-light">{{ document.description }}</p>
       <section class="flex items-center gap-1 mt-5">
@@ -60,31 +90,8 @@ onMounted(async () => {
         </h3>
       </section>
     </main>
-    <section class="border-t border-dark-gray py-10">
-      <ul class="grid gap-10">
-        <li v-for="item of items">
-          <div v-html="item.content"></div>
-        </li>
-      </ul>
-    </section>
-    <section class="border-t border-dark-gray py-10">
-      <h1>Comentarios</h1>
-      <ul class="grid gap-5 mt-10" v-if="comments.length > 0">
-        <li v-for="comment of comments" class="border border-dark-light rounded p-5">
-          <section class="flex items-center gap-1">
-            <Icon icon="mdi:account-circle-outline" class="text-[2.5rem]" />
-            <h3>
-              <span class="font-bold block -mb-2">{{ comment.user.name }}</span>
-              <small class="text-dark-light text-sm">Publicado el: {{ formatSimpleDate(comment.createdAt) }}</small>
-            </h3>
-          </section>
-          <p class="mt-5 text-lg">
-            {{ comment.content }}
-          </p>
-        </li>
-      </ul>
-      <Empty v-else />
-    </section>
+    <Items :items="items" />
+    <Comments :documentId="document.documentId" />
     <Footer />
   </div>
   <Empty v-else />

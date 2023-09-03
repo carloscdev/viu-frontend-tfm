@@ -3,8 +3,8 @@ import DashboardLayout from '@/layouts/DashboardLayout.vue';
 
 const authRoute = [
   {
-    meta: { title: 'Inicio', layout: DashboardLayout },
-    path: '/',
+    meta: { title: 'Dashboard', layout: DashboardLayout },
+    path: '/dashboard',
     name: 'home',
     component: Home,
   },

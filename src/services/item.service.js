@@ -1,23 +1,23 @@
 import axios from "axios";
 
 export class ItemService {
-  async getItemsByDocument(documentId) {
-    return await axios.get(`/items/document/${documentId}`);
+  getItemsByDocument(documentId) {
+    return axios.get(`/items/document/${documentId}`);
   }
 
-  async createItem(item) {
-    return await axios.post("/items", item);
+  createItem(item) {
+    return axios.post("/items", item);
   }
 
-  async getItemById(itemId) {
-    return await axios.get(`/items/${itemId}`);
+  getItemById(itemId) {
+    return axios.get(`/items/${itemId}`);
   }
 
-  async updateItem(itemId, item) {
-    return await axios.patch(`/items/${itemId}`, item);
+  updateItem(itemId, item) {
+    return axios.patch(`/items/${itemId}`, item);
   }
 
-  async deleteItem(itemId) {
-    return await axios.delete(`/items/${itemId}`);
+  deleteItem(itemId) {
+    return axios.delete(`/items/${itemId}`);
   }
 }

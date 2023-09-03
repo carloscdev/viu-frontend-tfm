@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export class AuthService {
-  async login(user) {
-    return await axios.post(`/users/login`, user);
+  login(user) {
+    return axios.post(`/users/login`, user);
   }
 
-  async register(user) {
-    return await axios.post(`/users/register`, user);
+  register(user) {
+    return axios.post(`/users/register`, user);
   }
 }
