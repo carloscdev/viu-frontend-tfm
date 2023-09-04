@@ -29,6 +29,6 @@ $ yarn dev
 # Build
 
 ```bash
-# build for production and launch server
+# build para producción
 $ yarn build
 ```
