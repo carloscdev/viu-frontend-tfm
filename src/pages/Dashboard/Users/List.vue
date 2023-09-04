@@ -5,14 +5,17 @@ import { UserService } from '@/services/user.service';
 import { useStore } from '@/store/';
 import { useRouter } from 'vue-router';
 import Empty from '@/components/Dashboard/Empty.vue';
+import Loading from '@/components/Dashboard/Loading.vue';
 
 const store = useStore();
 const router = useRouter();
 const userService = new UserService();
 const users = ref([]);
+const isLoading = ref(false);
 
 const getUsers = async () => {
   try {
+    isLoading.value = true;
     const response = await userService.getUsers();
     users.value = response.data;
     users.value = users.value.map((user) => {
@@ -23,6 +26,8 @@ const getUsers = async () => {
     });
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener los usuarios.');
+  } finally {
+    isLoading.value = false;
   }
 }
 
@@ -46,17 +51,18 @@ const handleRole = async (userId, isAdmin) => {
 }
 
 onMounted(async () => {
-  if (store.user.role !== 'ADMIN') {
+  if (store.user.role !== 'ADMIN'&& store.isAuth()) {
     store.activeAlert('danger', 'No tienes permisos para acceder a esta página.');
     router.replace({ name: 'home' })
+  } else {
+    await getUsers();
   }
-  await getUsers();
 })
 </script>
 
 <template>
   <TitleBase :title="`Lista de usuarios`" subtitle="Visualiza y edita usuarios (Solo para administradores)" />
-  <div class="table" v-if="users.length">
+  <div class="table" v-if="users.length && !isLoading">
     <ul class="table-head grid-cols-[0.1fr,0.6fr,0.5fr,0.3fr,0.3fr]">
       <li>ID</li>
       <li>Nombre</li>
@@ -88,5 +94,6 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <Empty v-else />
+  <Empty v-if="!users.length && !isLoading" />
+  <Loading v-if="isLoading" />
 </template>

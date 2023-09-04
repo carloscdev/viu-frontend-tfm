@@ -10,6 +10,7 @@ import { CategoryService } from '@/services/category.service';
 import { useStore } from '@/store/'
 import { formatSimpleDate } from '@/utils/handleDate';
 import { useRouter } from 'vue-router';
+import Loading from '@/components/Dashboard/Loading.vue';
 
 const store = useStore();
 const router = useRouter();
@@ -18,6 +19,7 @@ const categories = ref([]);
 const categoryId = ref(null);
 const openModalAdd = ref(false);
 const openModalEdit = ref(false);
+const isLoading = ref(false);
 
 const handleModalAdd = () => {
   openModalAdd.value = !openModalAdd.value;
@@ -31,10 +33,13 @@ const handleModalEdit = (id = null) => {
 
 const getCategories = async () => {
   try {
+    isLoading.value = true;
     const response = await categoryService.getCategories();
     categories.value = response.data;
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las categorías.');
+  } finally {
+    isLoading.value = false;
   }
 }
 
@@ -51,7 +56,7 @@ const updateCategory = (category) => {
 
 
 onMounted(async () => {
-  if (store.user.role !== 'ADMIN') {
+  if (store.user.role !== 'ADMIN' && store.isAuth()) {
     store.activeAlert('danger', 'No tienes permisos para acceder a esta página.');
     router.replace({ name: 'home' })
   }
@@ -68,7 +73,7 @@ onMounted(async () => {
         <Icon icon="mdi:plus" class="text-lg" />
       </ButtonBase>
     </div>
-    <div class="table" v-if="categories.length">
+    <div class="table" v-if="categories.length && !isLoading">
       <ul class="table-head grid-cols-[0.2fr,1fr,0.5fr,0.2fr]">
         <li>ID</li>
         <li>Tiítulo</li>
@@ -88,7 +93,8 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <Empty v-else />
+    <Empty v-if="!categories.length && !isLoading" />
+    <Loading v-if="isLoading" />
   </section>
   <ModalAdd v-if="openModalAdd" @close="handleModalAdd" @created="getNewCategory" />
   <ModalEdit v-if="openModalEdit" @close="handleModalEdit" :categoryId="categoryId" @updated="updateCategory" />

@@ -5,19 +5,24 @@ import { useStore } from '@/store/'
 import { formatSimpleDate } from '@/utils/handleDate'
 import { Icon } from '@iconify/vue';
 import Empty from '@/components/Dashboard/Empty.vue';
+import Loading from './Loading.vue';
 
 const store = useStore();
 
 const documentService = new DocumentService();
 
 const documents = ref([]);
+const isLoading = ref(false);
 
 const getRecentDocuments = async () => {
   try {
+    isLoading.value = true;
     const response = await documentService.getRecentDocuments();
     documents.value = response.data;
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las últimas publicaciones.');
+  } finally {
+    isLoading.value = false;
   }
 }
 
@@ -30,7 +35,7 @@ onMounted(async () => {
 <template>
   <section>
     <h2>Nuevas publicaciones</h2>
-    <div class="table" v-if="documents.length">
+    <div class="table" v-if="documents.length && !isLoading">
       <ul class="table-head grid-cols-[0.4fr,0.4fr,0.3fr,0.2fr,0.2fr]">
         <li>Título</li>
         <li>Descripción</li>
@@ -51,6 +56,7 @@ onMounted(async () => {
         <li>{{ formatSimpleDate(doc.createdAt) }}</li>
       </ul>
     </div>
-    <Empty v-else />
+    <Empty v-if="!documents.length && !isLoading" />
+    <Loading v-if="isLoading" />
   </section>
 </template>

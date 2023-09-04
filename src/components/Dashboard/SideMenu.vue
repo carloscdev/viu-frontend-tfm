@@ -42,10 +42,21 @@ const items = ref([
   },
 ]);
 
+const props = defineProps({
+  isActive: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emits = defineEmits([
+  'handleClick'
+])
+
 </script>
 
 <template>
-  <aside class="menu bg-dark-gray py-10 fixed left-0 top-0 w-[100px] min-h-screen">
+  <aside class="menu bg-dark-gray py-10 fixed z-20 left-0 top-0 w-[100px] min-h-screen ease-in-out duration-300" :class="!isActive ? 'hiddenMenu' : ''">
     <router-link :to="{ name: 'home' }">
       <img src="../../assets/logo-small.png" alt="Logo VIU HUB" width="45" class="mx-auto">
     </router-link>
@@ -54,13 +65,13 @@ const items = ref([
         <Icon :icon="item.icon" class="text-3xl mx-auto"/>
         <span class="text-dark-light group-hover:text-primary text-xs">{{ item.text }}</span>
       </router-link>
-      <router-link :to="{ name: 'categories' }" v-if="store.user.role === 'ADMIN'">
+      <router-link :to="{ name: 'categories' }" v-if="store.user.role === 'ADMIN' && store.isAuth()" class="hover:text-primary group">
         <Icon icon="mdi:format-list-bulleted-type" class="text-3xl mx-auto"/>
-        <span class="text-xs">Categorías</span>
+        <span class="text-dark-light group-hover:text-primary text-xs">Categorías</span>
       </router-link>
-      <router-link :to="{ name: 'users' }" v-if="store.user.role === 'ADMIN'">
+      <router-link :to="{ name: 'users' }" v-if="store.user.role === 'ADMIN' && store.isAuth()" class="hover:text-primary group">
         <Icon icon="mdi:account-group-outline" class="text-3xl mx-auto"/>
-        <span class="text-xs">Usuarios</span>
+        <span class="text-dark-light group-hover:text-primary text-xs">Usuarios</span>
       </router-link>
       <a class="text-red-600 hover:opacity-80 cursor-pointer text-center" @click="store.logout">
         <Icon icon="mdi:logout" class="text-3xl mx-auto"/>
@@ -68,6 +79,11 @@ const items = ref([
       </a>
     </nav>
   </aside>
+  <div class="fixed z-10 right-5 bottom-5 bg-dark-gray rounded h-12 w-12 flex items-center justify-center hover:text-primary shadow">
+    <button @click="emits('handleClick')" class="w-full h-full">
+      <Icon :icon="isActive ? 'mdi:menu-open' : 'mdi:menu-close'" class="text-3xl mx-auto text-dark-light hover:cursor-pointer hover:text-primary"/>
+    </button>
+  </div>
 </template>
 
 <style>
@@ -79,24 +95,17 @@ const items = ref([
   @apply text-dark-light
 }
 .menu {
-  transform: translateX(-100px);
-}
-
-
-@media (min-width: 768px) {
-  .menu {
   animation-duration: 1s;
   animation-fill-mode: both;
-  opacity: 0;
   animation-name: fadeInLeft;
 }
+
+.hiddenMenu {
+  transform: translateX(-100px) !important;
 }
 
 @keyframes fadeInLeft {
   0% { transform: translateX(-100px); }
-  100% {
-    transform: translateX(0);
-    opacity: 1
-  }
+  100% { transform: translateX(0); }
 }
 </style>

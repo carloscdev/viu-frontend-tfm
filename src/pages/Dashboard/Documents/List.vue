@@ -8,20 +8,25 @@ import ButtonBase from '@/components/Base/ButtonBase.vue';
 import { Icon } from '@iconify/vue';
 import ModalAdd from './Components/ModalAdd.vue';
 import Empty from '../../../components/Dashboard/Empty.vue';
+import Loading from '@/components/Dashboard/Loading.vue';
 
 const store = useStore();
 
 const documentService = new DocumentService();
 const isModalOpen = ref(false);
+const isLoading = ref(false);
 
 const documents = ref([]);
 
 const getRecentDocuments = async () => {
   try {
+    isLoading.value = true;
     const response = await documentService.getDocuments();
     documents.value = response.data;
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener las publicaciones.');
+  } finally {
+    isLoading.value = false;
   }
 }
 const handleModal = () => {
@@ -42,7 +47,7 @@ onMounted(async () => {
         <Icon icon="mdi:plus" class="text-lg" />
       </ButtonBase>
     </div>
-    <div class="table" v-if="documents.length">
+    <div class="table" v-if="documents.length && !isLoading">
       <ul class="table-head grid-cols-[repeat(2,0.4fr),repeat(2,0.2fr),0.1fr]">
         <li>Título</li>
         <li>Descripción</li>
@@ -69,7 +74,8 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <Empty v-else />
+    <Empty v-if="!documents.length && !isLoading" />
+    <Loading v-if="isLoading" />
   </section>
   <ModalAdd v-if="isModalOpen" @close="handleModal" />
 </template>

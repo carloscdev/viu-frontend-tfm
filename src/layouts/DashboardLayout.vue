@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/store/';
 import SideMenu from '@/components/Dashboard/SideMenu.vue';
@@ -8,8 +8,8 @@ import Footer from '@/components/Dashboard/Footer.vue';
 
 const store = useStore();
 const router = useRouter();
-
 const userService = new UserService();
+const isMenuActive = ref(true);
 
 const getProfile = async () => {
   try {
@@ -18,6 +18,10 @@ const getProfile = async () => {
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al obtener los datos de usuario');
   }
+}
+
+const handleClick = () => {
+  isMenuActive.value = !isMenuActive.value;
 }
 
 onMounted(async () => {
@@ -34,8 +38,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SideMenu />
-  <div class="md:ml-[100px]">
+  <SideMenu :isActive="isMenuActive" @handleClick="handleClick" />
+  <div :class="isMenuActive ? 'translate-x-[100px] md:translate-x-0 md:ml-[100px] ml-0' : 'translate-x-0 ml-0'" class="ease-in-out duration-300">
     <main class="my-10 mx-5 flex flex-col gap-12">
       <slot />
     </main>
