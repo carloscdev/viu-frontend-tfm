@@ -1,89 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  --primary: #E65014;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply bg-dark text-white overflow-x-hidden;
+}
+
+hr {
+  /* @apply opacity-[0.04]; */
+  @apply h-[0.5px] bg-dark-gray border-none;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  @apply font-bold text-3xl;
+}
+h2 {
+  @apply font-bold text-2xl;
+}
+h3 {
+  @apply font-semibold text-xl;
+}
+h4 {
+  @apply font-semibold text-lg;
+}
+select,
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="text"],
+textarea {
+  @apply bg-dark-gray border border-dark-light px-4 h-10 text-white rounded focus:outline-none focus:border-primary w-full focus:shadow-primary focus:shadow;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+textarea {
+  @apply h-24 py-2;
 }
 
-.card {
-  padding: 2em;
+.validate-danger select,
+.validate-danger input[type="password"],
+.validate-danger input[type="email"],
+.validate-danger input[type="search"],
+.validate-danger input[type="text"],
+.validate-danger textarea {
+  @apply bg-red-900/10 border-red-600 focus:border-red-600 w-full focus:shadow-red-600 focus:shadow;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+input[type="button"],
+input[type="submit"],
+button[type="submit"],
+button,
+.button {
+  @apply text-white h-10 rounded flex items-center justify-center w-full hover:opacity-95 gap-2 disabled:opacity-70 disabled:cursor-not-allowed ease-in-out duration-100;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.button-primary {
+  @apply bg-primary hover:shadow hover:shadow-primary font-semibold;
+}
+.button-danger {
+  @apply bg-red-600 hover:shadow hover:shadow-red-600 font-semibold;
+}
+.button-dark {
+  @apply bg-dark-light hover:shadow hover:shadow-dark-light font-semibold;
+}
+
+.button-outline-primary {
+  @apply border border-primary text-primary hover:bg-primary hover:shadow hover:shadow-primary;
+}
+.button-outline-danger {
+  @apply border border-red-600 text-red-600 hover:bg-red-600 hover:shadow hover:shadow-red-600;
+}
+
+.button-light {
+  @apply  text-dark-light bg-transparent font-bold hover:opacity-100 hover:text-primary;
+}
+
+label {
+  @apply text-dark-light text-sm block mb-1;
+}
+
+.validate-danger label {
+  @apply text-red-600 opacity-50;
+}
+
+ /* Table */
+
+.table {
+  @apply grid gap-5 mt-5 overflow-scroll;
+
+}
+.table-head {
+  @apply grid  gap-3 border px-5 py-2 rounded border-dark-light text-dark-light min-w-[50rem];
+}
+
+.table-row {
+  @apply hover:bg-dark-gray grid items-center gap-3 border border-dark-light px-5 py-3 rounded;
+}
+
+.item-content pre {
+  font-family: monospace !important;
+  color: inherit;
+  @apply bg-dark-gray p-5 rounded overflow-x-scroll max-w-[350px] sm:max-w-[720px];
+}
+
+/* switch */
+.switch.published {
+  @apply bg-primary;
+}
+
+.switch.not-published {
+  @apply bg-dark-light;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.switch {
+  display: inline-block;
+  height: 35px;
+  width: 65px;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.switch div {
+  margin-left: 5px;
+  height: 28px;
+  width: 28px;
+  border-radius: 100%;
+  background: #FFF;
+  transition: all 300ms;
+}
+
+.switch input:checked+div {
+  transform: translate3d(100%, 0, 0);
 }
