@@ -10,8 +10,9 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  @apply bg-dark text-white overflow-x-hidden;
+body,
+body #app{
+  @apply bg-dark text-white overflow-x-hidden max-w-[100vw];
 }
 
 hr {
