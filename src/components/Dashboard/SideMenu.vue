@@ -54,11 +54,11 @@ const items = ref([
         <Icon :icon="item.icon" class="text-3xl mx-auto"/>
         <span class="text-dark-light group-hover:text-primary text-xs">{{ item.text }}</span>
       </router-link>
-      <router-link :to="{ name: 'categories' }">
+      <router-link :to="{ name: 'categories' }" v-if="store.user.role === 'ADMIN'">
         <Icon icon="mdi:format-list-bulleted-type" class="text-3xl mx-auto"/>
         <span class="text-xs">Categorías</span>
       </router-link>
-      <router-link :to="{ name: 'users' }">
+      <router-link :to="{ name: 'users' }" v-if="store.user.role === 'ADMIN'">
         <Icon icon="mdi:account-group-outline" class="text-3xl mx-auto"/>
         <span class="text-xs">Usuarios</span>
       </router-link>
