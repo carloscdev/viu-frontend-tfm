@@ -1,7 +1,34 @@
-# Vue 3 + Vite
+<p align="center">
+  <img src="https://keystoneacademic-res.cloudinary.com/image/upload/element/14/146414_VIU_Cover_Cover.jpg" />
+</p>
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Descripción
 
-## Recommended IDE Setup
+Frontend de la aplicación final del TFM para el Master en Desarrollo de Aplicaciones y Servicios Web.
+- Tecnología: [Vue](https://vuejs.org/)
+- Desarrollador:  [Carlos Córdova](https://carlosc.dev)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Instalación
+
+```bash
+# Instalación de dependencias
+$ yarn
+```
+
+## Variables de entorno
+- Crear un archivo .env
+- Copiar el contenido del archivo .env.template
+- Agregar los valores correctos a variables de entorno
+
+## Levantar servidor
+
+```bash
+# development
+$ yarn dev
+```
+# Build
+
+```bash
+# build for production and launch server
+$ yarn build
+```
