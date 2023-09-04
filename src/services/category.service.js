@@ -8,4 +8,16 @@ export class CategoryService {
   getPublicCategories() {
     return axios.get(`/categories/public`);
   }
+
+  createCategory(category) {
+    return axios.post(`/categories`, category);
+  }
+
+  updateCategory(categoryId, category) {
+    return axios.patch(`/categories/${categoryId}`, category);
+  }
+
+  getCategoryById(categoryId) {
+    return axios.get(`/categories/${categoryId}`);
+  }
 }

@@ -19,7 +19,6 @@ const handleAxios = () => {
       return response;
     },
     function (error) {
-      console.log('========== ERROR ===========', error.response)
       if (error.response.status === 401 || error.response.status === 403) {
         localStorage.removeItem('token')
         window.location.href = '/usuario/inicio-sesion'

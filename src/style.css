@@ -109,3 +109,39 @@ label {
   color: inherit;
   @apply bg-dark-gray p-5 rounded overflow-x-scroll max-w-[350px] sm:max-w-[720px];
 }
+
+/* switch */
+.switch.published {
+  @apply bg-primary;
+}
+
+.switch.not-published {
+  @apply bg-dark-light;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.switch {
+  display: inline-block;
+  height: 35px;
+  width: 65px;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.switch div {
+  margin-left: 5px;
+  height: 28px;
+  width: 28px;
+  border-radius: 100%;
+  background: #FFF;
+  transition: all 300ms;
+}
+
+.switch input:checked+div {
+  transform: translate3d(100%, 0, 0);
+}

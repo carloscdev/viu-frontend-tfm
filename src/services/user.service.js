@@ -12,4 +12,16 @@ export class UserService {
   updatePassword(data) {
     return axios.patch(`/users/password`, data);
   }
+
+  getUsers() {
+    return axios.get(`/users`);
+  }
+
+  updateUser(userId, data) {
+    return axios.patch(`/users/active/${userId}`, data);
+  }
+
+  updateRoleUser(userId, data) {
+    return axios.patch(`/users/role/${userId}`, data);
+  }
 }

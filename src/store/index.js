@@ -6,7 +6,7 @@ export const useStore = defineStore('store', () => {
     userId: '',
     name: '',
     email: '',
-    role: 'USER',
+    role: 'ADMIN',
     isActive: true,
     isDeleted: false,
   });

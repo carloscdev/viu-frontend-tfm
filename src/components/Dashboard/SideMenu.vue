@@ -47,16 +47,24 @@ const items = ref([
 <template>
   <aside class="menu bg-dark-gray py-10 fixed left-0 top-0 w-[100px] min-h-screen">
     <router-link :to="{ name: 'home' }">
-      <img src="../../assets/logo-small.png" alt="Logo VIU HUB" width="55" class="mx-auto">
+      <img src="../../assets/logo-small.png" alt="Logo VIU HUB" width="45" class="mx-auto">
     </router-link>
-    <nav class="flex items-center justify-center flex-col mt-16 gap-5">
+    <nav class="flex items-center justify-center flex-col mt-12 gap-3">
       <router-link v-for="item of items" :to="item.to" :key="item.text" class="hover:text-primary group">
         <Icon :icon="item.icon" class="text-3xl mx-auto"/>
-        <span class="text-dark-light group-hover:text-primary">{{ item.text }}</span>
+        <span class="text-dark-light group-hover:text-primary text-xs">{{ item.text }}</span>
       </router-link>
-      <a class="text-red-600 hover:opacity-80 cursor-pointer" @click="store.logout">
+      <router-link :to="{ name: 'categories' }">
+        <Icon icon="mdi:format-list-bulleted-type" class="text-3xl mx-auto"/>
+        <span class="text-xs">Categorías</span>
+      </router-link>
+      <router-link :to="{ name: 'users' }">
+        <Icon icon="mdi:account-group-outline" class="text-3xl mx-auto"/>
+        <span class="text-xs">Usuarios</span>
+      </router-link>
+      <a class="text-red-600 hover:opacity-80 cursor-pointer text-center" @click="store.logout">
         <Icon icon="mdi:logout" class="text-3xl mx-auto"/>
-        <span>Salir</span>
+        <span class="text-xs">Salir</span>
       </a>
     </nav>
   </aside>

@@ -156,7 +156,7 @@ onMounted(async () => {
       <label for="description">
         Descripción
       </label>
-      <textarea id="description" v-model="document.description"></textarea>
+      <textarea class="h-36" id="description" v-model="document.description"></textarea>
       <div class="text-red-600 text-sm">
         <p v-for="error of v$.description.$errors">
           {{ error.$message }}
@@ -179,40 +179,3 @@ onMounted(async () => {
   </form>
   <ConfirmDelete v-if="openModal" title="¿Estás seguro de eliminar este documento?" subtitle="No podrás recuperar la información" @close="handleModal" @confirm="deleteDocument" />
 </template>
-
-<style scoped>
-.switch.published {
-  @apply bg-primary;
-}
-
-.switch.not-published {
-  @apply bg-dark-light;
-}
-
-.switch input {
-  position: absolute;
-  opacity: 0;
-}
-
-.switch {
-  display: inline-block;
-  height: 35px;
-  width: 65px;
-  border-radius: 2rem;
-  display: flex;
-  align-items: center;
-}
-
-.switch div {
-  margin-left: 5px;
-  height: 28px;
-  width: 28px;
-  border-radius: 100%;
-  background: #FFF;
-  transition: all 300ms;
-}
-
-.switch input:checked+div {
-  transform: translate3d(100%, 0, 0);
-}
-</style>

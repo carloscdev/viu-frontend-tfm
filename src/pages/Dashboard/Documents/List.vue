@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { DocumentService } from '@/services/document.service';
-import { useStore } from '@/store/'
-import { formatSimpleDate } from '@/utils/handleDate'
+import { useStore } from '@/store/';
+import { formatSimpleDate } from '@/utils/handleDate';
 import TitleBase from '@/components/Base/TitleBase.vue';
 import ButtonBase from '@/components/Base/ButtonBase.vue';
 import { Icon } from '@iconify/vue';

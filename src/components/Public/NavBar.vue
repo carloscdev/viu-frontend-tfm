@@ -9,9 +9,9 @@ const store = useStore();
 <template>
   <nav class="h-20 bg-dark-gray flex items-center justify-center md:justify-between px-10">
     <router-link :to="{ name: 'public-main' }">
-      <img class="w-25" src="@/assets/logo.png" alt="LOGO VIU HUB">
+      <img width="120" src="@/assets/logo.png" alt="LOGO VIU HUB">
     </router-link>
-    <ul class="text-lg gap-5 hidden md:flex">
+    <ul class="text-lmd gap-5 hidden md:flex">
       <li class="text-dark-light">
         <router-link :to="{ name: 'public-main' }" class="flex items-center gap-2 hover:text-primary font-bold">
           Inicio

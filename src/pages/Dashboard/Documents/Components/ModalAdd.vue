@@ -94,7 +94,7 @@ onMounted(async() => {
       </div>
       <div :class="v$.title.$error ? 'validate-danger' : ''">
         <label for="text">
-          Title
+          Título
         </label>
         <input type="text" id="text" v-model="document.title" />
         <div class="text-red-600 text-sm">

@@ -36,6 +36,18 @@ const authRoute = [
     path: '/perfil',
     name: 'profile',
     component: () => import('@/pages/Dashboard/Profile/List.vue')
+  },
+  {
+    meta: { title: 'Categorías', layout: DashboardLayout },
+    path: '/categorias',
+    name: 'categories',
+    component: () => import('@/pages/Dashboard/Categories/List.vue')
+  },
+  {
+    meta: { title: 'Usuarios', layout: DashboardLayout },
+    path: '/usuarios',
+    name: 'users',
+    component: () => import('@/pages/Dashboard/Users/List.vue')
   }
 ]
 

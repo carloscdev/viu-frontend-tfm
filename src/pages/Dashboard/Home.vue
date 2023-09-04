@@ -36,7 +36,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <TitleBase :title="`Bienvenido ${store.user.name}`" :subtitle="`Fecha Actual: ${formatSimpleDate(new Date)}`" />
+  <TitleBase :title="`Bienvenido ${store.user.name}`" :subtitle="`Rol: ${store.user.role}, Fecha Actual: ${formatSimpleDate(new Date)}`" />
   <section class="grid md:grid-cols-3 gap-5">
     <div class="bg-green-500/30 rounded p-5 shadow">
       <h3 class="text-xl font-light">Documentos Publicados</h3>
