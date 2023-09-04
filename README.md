@@ -23,7 +23,7 @@ $ yarn
 ## Levantar servidor
 
 ```bash
-# development
+# development localhost
 $ yarn dev
 ```
 # Build
