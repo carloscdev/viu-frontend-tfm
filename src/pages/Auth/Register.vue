@@ -97,7 +97,7 @@ const handleRegister = async () => {
     </div>
     <div :class="v$.passwordConfirm.$error ? 'validate-danger' : ''">
       <label for="password">
-        Contraseña
+        Confirmar Contraseña
       </label>
       <input type="password" id="password" v-model="user.passwordConfirm"/>
       <div class="text-red-600 text-sm">
