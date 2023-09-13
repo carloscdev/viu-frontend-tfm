@@ -11,6 +11,7 @@ import Footer from '@/components/Dashboard/Footer.vue';
 import LoadingDocument from './Components/LoadingDocument.vue';
 import Comments from './Components/Comments.vue';
 import Items from './Components/Items.vue';
+import Files from './Components/Files.vue';
 
 const store = useStore();
 const route = useRoute();
@@ -20,6 +21,7 @@ const documentService = new DocumentService();
 const favoriteService = new FavoriteService();
 const document = ref({});
 const items = ref([]);
+const files = ref([]);
 const user = ref({});
 const category = ref({});
 const existDocument = ref(true);
@@ -48,6 +50,7 @@ onMounted(async () => {
     document.value = await response.data.document;
     user.value = await response.data.document.user;
     items.value = await response.data.items;
+    files.value = await response.data.files;
     category.value = await response.data.document.category;
     window.document.title = document.value.title + ' — VIU HUB';
     if (store.isAuth()) {
@@ -90,6 +93,7 @@ onMounted(async () => {
         </h3>
       </section>
     </main>
+    <Files :files="files" />
     <Items :items="items" />
     <Comments :documentId="document.documentId" />
     <Footer />

@@ -8,4 +8,8 @@ export class AuthService {
   register(user) {
     return axios.post(`/users/register`, user);
   }
+
+  recoveryPassword(email) {
+    return axios.post(`/users/recovery-password`, email);
+  }
 }

@@ -17,7 +17,7 @@ body #app{
 
 hr {
   /* @apply opacity-[0.04]; */
-  @apply h-[0.5px] bg-dark-gray border-none;
+  @apply h-[1px] bg-dark-gray border-none;
 }
 
 h1 {

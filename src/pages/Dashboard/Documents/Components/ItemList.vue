@@ -9,6 +9,7 @@ import Empty from '@/components/Dashboard/Empty.vue';
 import ModalAddItem from './ModalAddItem.vue';
 import ModalEditItem from './ModalEditItem.vue';
 import ConfirmDelete from '@/components/Dashboard/ConfirmDelete.vue';
+import Loading from '@/components/Dashboard/Loading.vue';
 
 const itemService = new ItemService();
 const store = useStore();
@@ -44,7 +45,7 @@ const handleModalDelete = (id = null) => {
 const deleteItem = async () => {
   try {
     await itemService.deleteItem(itemId.value);
-    await getItemsByDocument();
+    listItem.value = listItem.value.filter(item => item.itemId !== itemId.value);
     store.activeAlert('success', 'Item eliminado correctamente');
     handleModalDelete();
   } catch (error) {
@@ -54,11 +55,14 @@ const deleteItem = async () => {
 
 const getItemsByDocument = async () => {
   try {
+    isLoading.value = true;
     const response = await itemService.getItemsByDocument(route.params.documentId);
     listItem.value = [...response.data];
   } catch (error) {
     console.log(error);
     store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al obtener los items');
+  } finally {
+    isLoading.value = false;
   }
 }
 
@@ -71,7 +75,7 @@ onMounted(async () => {
   <div class="grid gap-5">
     <hr>
     <h2>Contenido</h2>
-    <ul v-if="listItem.length" class="grid gap-5">
+    <ul v-if="listItem.length && !isLoading" class="grid gap-5">
       <li v-for="item of listItem" :key="item.itemId" class="border border-dark-light p-5 rounded grid gap-3">
         <div v-html="item.content"></div>
         <div class="w-full flex gap-3 sm:w-28 ml-auto">
@@ -84,7 +88,8 @@ onMounted(async () => {
         </div>
       </li>
     </ul>
-    <Empty v-else />
+    <Empty v-if="!listItem.length && !isLoading" />
+    <Loading v-if="isLoading" />
     <div class="grid w-full gap-3 ml-auto sm:w-56">
       <ButtonBase type="button" :isLoading="isLoading" class="button-primary" @click="handleModalAdd">
         Agregar
