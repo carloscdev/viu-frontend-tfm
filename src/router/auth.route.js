@@ -1,5 +1,6 @@
 import Login from '../pages/Auth/Login.vue'
 import Register from '../pages/Auth/Register.vue'
+import Recover from '../pages/Auth/Recover.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue';
 
 const authRoute = [
@@ -14,6 +15,12 @@ const authRoute = [
     path: '/usuario/registro',
     name: 'register',
     component: Register
+  },
+  {
+    meta: { title: 'Recuperar Contraseña', layout: AuthLayout },
+    path: '/usuario/recuperar-contrasena',
+    name: 'recovery-password',
+    component: Recover
   },
 ]
 

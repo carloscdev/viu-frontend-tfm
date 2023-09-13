@@ -29,6 +29,8 @@ const document = reactive({
   isPublished: true,
 })
 
+const slug = ref('');
+
 const openModal = ref(false);
 
 const rules = {
@@ -54,6 +56,7 @@ const getDocumentById = async () => {
     document['title'] = response.data.title;
     document['description'] = response.data.description;
     document['isPublished'] = response.data.isPublished;
+    slug.value = response.data.slug;
   } catch (error) {
     store.activeAlert('danger', error?.response?.data?.message || 'No se pudo obtener el documento.');
     router.replace({ name: 'list-documents' });
@@ -115,7 +118,12 @@ onMounted(async () => {
 <template>
   <form class="grid gap-5" @submit.prevent="handleDocument">
     <hr>
-    <h2>Documento</h2>
+    <h2 class="flex items-center gap-5">
+      <span>Documento</span>
+      <a :href="`/publico/${slug}`" target="_blank" v-if="document.isPublished">
+        <Icon icon="mdi:open-in-new" class="text-3xl" />
+      </a>
+    </h2>
     <div class="-mb-2">
       <label>
         Publicado

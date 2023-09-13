@@ -39,7 +39,7 @@ onMounted(async () => {
 
 <template>
   <SideMenu :isActive="isMenuActive" @handleClick="handleClick" />
-  <div :class="isMenuActive ? 'translate-x-[100px] md:translate-x-0 md:ml-[100px] ml-0' : 'translate-x-0 ml-0'" class="ease-in-out duration-300">
+  <div :class="isMenuActive ? 'ml-[100px]' : 'ml-0'" class="ease-in-out duration-300">
     <main class="my-10 mx-5 flex flex-col gap-12">
       <slot />
     </main>

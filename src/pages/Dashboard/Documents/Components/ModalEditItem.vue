@@ -43,11 +43,11 @@ const handleItem = async () => {
     try {
       isLoading.value = true;
       await itemService.updateItem(props.itemId, item);
-      store.activeAlert('success', 'Contenido agregado correctamente.');
+      store.activeAlert('success', 'Contenido actualizado correctamente.');
       emits('close');
     } catch (error) {
       console.log(error);
-      store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al agregar el contenido');
+      store.activeAlert('danger', error?.response?.data?.message || 'Ocurrió un error al actualizar el contenido');
     } finally {
       isLoading.value = false;
     }
@@ -74,7 +74,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ModalBase title="Agregar contenido" subtitle="Completa los datos para continuar" @click="emits('close')">
+  <ModalBase title="Editar contenido" subtitle="Completa los datos para continuar" @click="emits('close')">
     <form class="grid gap-5" @submit.prevent="handleItem">
       <div :class="v$.content.$error ? 'validate-danger' : ''" class="mb-28 sm:mb-24">
         <QuillEditor theme="snow" v-model:content="item.content" contentType="html" toolbar="full" />

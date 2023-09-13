@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue';
 import { AuthService } from '@/services/auth.service';
 import ButtonBase from '@/components/Base/ButtonBase.vue';
 import { useVuelidate } from '@vuelidate/core';
-import { required, email, minLength, helpers } from '@vuelidate/validators'
+import { required, email, helpers } from '@vuelidate/validators'
 import { Icon } from '@iconify/vue';
 import { useStore } from '@/store/';
 import { useRouter } from 'vue-router';
@@ -17,17 +17,12 @@ const isLoading = ref(false);
 
 const user = reactive({
   email: '',
-  password: '',
 });
 
 const rules = {
   email: {
     required: helpers.withMessage('El correo electrónico es requerido', required),
     email: helpers.withMessage('El correo electrónico no es válido', email)
-  },
-  password: {
-    required: helpers.withMessage('La contraseña es requerida', required),
-    minLengthValue: helpers.withMessage('La contraseña debe tener al menos 8 caracteres', minLength(8))
   },
 }
 
@@ -38,11 +33,12 @@ const handleLogin = async () => {
   if (!v$.value.$error) {
     try {
       isLoading.value = true;
-      const response = await authService.login(user);
+      const response = await authService.recoveryPassword(user);
       store.setToken(response.data.token);
-      router.replace({ name: 'home' })
+      store.activeAlert('success', 'Contraseña generada correctamente, revisa tu correo');
+      router.replace({ name: 'login' })
     } catch (error) {
-      store.activeAlert('danger', error.response.data.message);
+      store.activeAlert('danger', error.response.data.message, 'Ocurrió un error al generar una nueva contraseña');
     } finally {
       isLoading.value = false;
     }
@@ -64,25 +60,13 @@ const handleLogin = async () => {
         </p>
       </div>
     </div>
-    <div :class="v$.password.$error ? 'validate-danger' : ''">
-      <label for="password">
-        Contraseña
-      </label>
-      <input type="password" id="password" v-model="user.password"/>
-      <router-link class="text-xs font-semibold text-dark-light" :to="{ name: 'recovery-password' }">¿No recuerdas tu contraseña?</router-link>
-      <div class="text-red-600 text-sm">
-        <p v-for="error of v$.password.$errors">
-          {{ error.$message }}
-        </p>
-      </div>
-    </div>
     <div class="grid gap-1">
       <ButtonBase type="submit" :isLoading="isLoading" class="button-primary">
-        Iniciar Sesión
+        Generar Contraseña
         <Icon icon="mdi:account-lock-open" class="text-lg"/>
       </ButtonBase>
-      <router-link class="button button-light" to="/usuario/registro">
-        ¿No tienes una cuenta?
+      <router-link class="button button-light" :to="{ name: 'login' }">
+        Iniciar Sesión
       </router-link>
     </div>
   </form>
