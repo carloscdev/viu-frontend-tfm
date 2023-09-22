@@ -93,7 +93,7 @@ onMounted(async () => {
         </h3>
       </section>
     </main>
-    <Files :files="files" />
+    <Files v-if="files.length > 0" :files="files" />
     <Items :items="items" />
     <Comments :documentId="document.documentId" />
     <Footer />
